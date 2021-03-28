@@ -8,17 +8,18 @@ class RegisterPage extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xffF2F2F2),     
     
       body: SafeArea( //nos pone en un area que distingue si existe notch
         child: SingleChildScrollView( //hace que podamos hacer escrol y ayuda a solucionar error de despliegue de pantalla 
         physics: BouncingScrollPhysics(), // hace que rebote el scrollview
           child: Container( //este contenedor va a tener todas las columnas principales
-            height: MediaQuery.of(context).size.height * 0.9,  // hace que los elementos ocupen el 90% del espacio de la pantalla
+            height: MediaQuery.of(context).size.height * 1.0,  // hace que los elementos ocupen el 100% del espacio de la pantalla esto arregla el error de super posicion del boton
             child: Column(  //creacion de columnas principales
             mainAxisAlignment:  MainAxisAlignment.spaceBetween, //espacio equivalente
               children:  [
-                Logo(title: 'registro',),
+                Logo(title: 'registro',rutaLogo: 'assets/perfil.png',),
                 _Form(),
                 Labels(ruta: 'login',textOne: '¿ya tienes cuenta?',textTwo: 'ingresa con tu cuenta ahora',),
                 Text('terminos y condiciones de uso',  style: TextStyle(fontWeight: FontWeight.w200))
@@ -30,9 +31,6 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
-
-
-
 class _Form extends StatefulWidget {
   @override
   __FormState createState() => __FormState();
@@ -75,6 +73,7 @@ class __FormState extends State<_Form> {
            BotonAzul(
              textoBoton: 'ingresar',
               onpressed: (){
+                print(nameControler.text);
                 print(emailControler.text);
                 print(passwordControler.text);
               }

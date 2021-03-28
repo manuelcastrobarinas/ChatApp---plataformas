@@ -21,8 +21,8 @@ class LoginPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.9,  // hace que los elementos ocupen el 90% del espacio de la pantalla
             child: Column(  //creacion de columnas principales
             mainAxisAlignment:  MainAxisAlignment.spaceBetween, //espacio equivalente
-              children:  [
-                Logo(title: 'messenger',),
+              children: <Widget>[
+                Logo(title: 'messenger',rutaLogo: 'assets/tag-logo.png',),
                 _Form(),
                 Labels( ruta: 'register',textOne: '¿no tienes una cuenta?', textTwo: 'crea una ahora!'),
                 Text('terminos y condiciones de uso',  style: TextStyle(fontWeight: FontWeight.w200))

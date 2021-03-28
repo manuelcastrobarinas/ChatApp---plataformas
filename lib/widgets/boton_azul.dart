@@ -20,7 +20,6 @@ class BotonAzul extends StatelessWidget {
       shape: StadiumBorder(),
       onPressed: this.onpressed,
       child: Container(
-        height: 40,
         width: double.infinity,
         child: Center(
           child: Text(this.textoBoton, style: TextStyle(color: Colors.white,fontSize: 18),),
