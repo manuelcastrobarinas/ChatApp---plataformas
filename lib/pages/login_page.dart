@@ -1,11 +1,16 @@
+
+import 'package:chatapp/helpers/mostrar_alerta.dart';
 import 'package:chatapp/widgets/boton_azul.dart';
 import 'package:chatapp/widgets/labels.dart';
 import 'package:chatapp/widgets/logo.dart';
 import 'package:flutter/material.dart';
 
 //import widgets personalizados
-
 import 'package:chatapp/widgets/InputsPersonalizados.dart';
+
+
+import 'package:provider/provider.dart';
+import 'package:chatapp/services/auth_service.dart';
 
 class LoginPage extends StatelessWidget {
 
@@ -48,6 +53,9 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+
+    final authService = Provider.of<AuthService>(context);
+
     return Container(
         margin: EdgeInsets.only(top: 40),
         padding: EdgeInsets.symmetric(horizontal: 40),
@@ -69,9 +77,16 @@ class __FormState extends State<_Form> {
             
            BotonAzul(
              textoBoton: 'ingresar',
-              onpressed: (){
-                print(emailControler.text);
-                print(passwordControler.text);
+              onpressed:authService.autenticando ? null :() async{ //hacemos que la propiedad de auntenticado bloquee nuestro boton
+               FocusScope.of(context).unfocus(); // quta el teclado cuando hacemos la peticion
+               final loginOk = await authService.login(emailControler.text.trim(), passwordControler.text.trim()); //recibe el controlador del email y el password por medio de nuestro servicio que se comunica al backend
+
+               if(loginOk){
+                 Navigator.pushReplacementNamed(context, 'usuarios'); // este navigator hace que no podamos regresar al login
+                 //TODO: conectar a nuestro soketServer
+               }else{
+                 mostrarAlerta(context, 'login incorrecto', 'revise sus datos nuevamente');
+               }
               }
             ),
           ],

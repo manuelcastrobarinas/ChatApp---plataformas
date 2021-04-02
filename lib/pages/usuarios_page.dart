@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart'; // importamos la libreria pull to refresh
 
+import 'package:provider/provider.dart';
+import '../services/auth_service.dart';
+
 class UsuariosPage extends StatefulWidget {
   @override
   _UsuariosPageState createState() => _UsuariosPageState();
@@ -21,16 +24,27 @@ class _UsuariosPageState extends State<UsuariosPage> {
     
   @override
   Widget build(BuildContext context) {
+
+    final authservice = Provider.of<AuthService>(context);
+    final usuario =authservice.usuario;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
         backgroundColor: Colors.white,
         leading: IconButton(
           icon:Icon(Icons.exit_to_app, color: Colors.black87),
-          onPressed: (){},
+          onPressed: (){
+      
+            //TODO: desconectarnos del socket Server
+            Navigator.pushReplacementNamed(context, 'login'); //sacamos al usuario de la pantalla y lo redirigimos al login
+            AuthService.deleteToken(); // y aqui eliminamos el token para que no lo mantenga en la sesion
+            
+            
+          },
         ),
         title: Center(
-          child: Text('mi nombre',style: TextStyle(color: Colors.black87),)
+          child: Text(usuario.nombre,style: TextStyle(color: Colors.black87),)
         ),
         actions: <Widget>[
           Container(
