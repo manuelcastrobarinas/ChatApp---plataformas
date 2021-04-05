@@ -1,5 +1,6 @@
 
 import 'package:chatapp/helpers/mostrar_alerta.dart';
+import 'package:chatapp/services/socket_service.dart';
 import 'package:chatapp/widgets/boton_azul.dart';
 import 'package:chatapp/widgets/labels.dart';
 import 'package:chatapp/widgets/logo.dart';
@@ -55,6 +56,7 @@ class __FormState extends State<_Form> {
   Widget build(BuildContext context) {
 
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
         margin: EdgeInsets.only(top: 40),
@@ -82,8 +84,8 @@ class __FormState extends State<_Form> {
                final loginOk = await authService.login(emailControler.text.trim(), passwordControler.text.trim()); //recibe el controlador del email y el password por medio de nuestro servicio que se comunica al backend
 
                if(loginOk){
+                 socketService.connect();
                  Navigator.pushReplacementNamed(context, 'usuarios'); // este navigator hace que no podamos regresar al login
-                 //TODO: conectar a nuestro soketServer
                }else{
                  mostrarAlerta(context, 'login incorrecto', 'revise sus datos nuevamente');
                }

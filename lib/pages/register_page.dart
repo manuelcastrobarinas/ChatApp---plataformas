@@ -1,3 +1,4 @@
+import 'package:chatapp/services/socket_service.dart';
 import 'package:chatapp/widgets/InputsPersonalizados.dart';
 import 'package:chatapp/widgets/boton_azul.dart';
 import 'package:chatapp/widgets/labels.dart';
@@ -47,10 +48,12 @@ class __FormState extends State<_Form> {
   final emailControler = TextEditingController();
   final passwordControler = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
 
     final authservice = Provider.of<AuthService>(context); 
+    final socketService = Provider.of<SocketService>(context);
 
     return Container(
         margin: EdgeInsets.only(top: 40),
@@ -87,7 +90,7 @@ class __FormState extends State<_Form> {
 
                 final registroOK= await authservice.register(nameControler.text.trim(), emailControler.text.trim(), passwordControler.text.trim());
                 if(registroOK ==true ){
-                  //TODO: conectar al socket server
+                  socketService.connect();
                   Navigator.pushReplacementNamed(context, 'login');
                 }else{
                   mostrarAlerta(context,'registro incorrecto', registroOK);
